@@ -2,74 +2,95 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>Favorilerim</title>
-<link rel="icon" href="https://dl.dropboxusercontent.com/scl/fi/bx3fra3blvrk5gfdgz2jo/favicon.ico?rlkey=corteo368e5bsbqyq37bc05tf&st=n9qg13e3&dl=1">
+    <link rel="icon" href="https://dl.dropboxusercontent.com/scl/fi/bx3fra3blvrk5gfdgz2jo/favicon.ico?rlkey=corteo368e5bsbqyq37bc05tf&st=n9qg13e3&dl=1">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
 
         :root {
-            --bg-primary: #f2f2f7;
-            --bg-secondary: #ffffff;
-            --text-primary: #000000;
-            --text-secondary: #8e8e93;
-            --border-color: #d1d1d6;
-            --shadow: rgba(0, 0, 0, 0.1);
+            --bg-gradient-start: #f5f7fa;
+            --bg-gradient-end: #c3cfe2;
+            --glass-bg: rgba(255, 255, 255, 0.25);
+            --glass-border: rgba(255, 255, 255, 0.18);
+            --text-primary: #1d1d1f;
+            --text-secondary: #6e6e73;
+            --shadow-light: rgba(31, 38, 135, 0.15);
+            --shadow-medium: rgba(31, 38, 135, 0.25);
             --accent-color: #007AFF;
+            --accent-glow: rgba(0, 122, 255, 0.3);
+            --search-glass: rgba(255, 255, 255, 0.4);
         }
 
         @media (prefers-color-scheme: dark) {
             :root {
-                --bg-primary: #000000;
-                --bg-secondary: #1c1c1e;
-                --text-primary: #ffffff;
-                --text-secondary: #8e8e93;
-                --border-color: #38383a;
-                --shadow: rgba(0, 0, 0, 0.3);
+                --bg-gradient-start: #0a0a0a;
+                --bg-gradient-end: #1a1a2e;
+                --glass-bg: rgba(26, 26, 46, 0.4);
+                --glass-border: rgba(255, 255, 255, 0.08);
+                --text-primary: #f5f5f7;
+                --text-secondary: #98989d;
+                --shadow-light: rgba(0, 0, 0, 0.3);
+                --shadow-medium: rgba(0, 0, 0, 0.5);
+                --search-glass: rgba(26, 26, 46, 0.6);
             }
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
-            background-color: var(--bg-primary);
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', sans-serif;
+            background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
+            background-attachment: fixed;
             color: var(--text-primary);
-            line-height: 1.4;
-            padding: 20px 16px;
+            line-height: 1.5;
+            padding: env(safe-area-inset-top, 20px) 16px env(safe-area-inset-bottom, 20px);
+            min-height: 100vh;
+            overflow-x: hidden;
         }
 
         .header {
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 20px;
+            margin-bottom: 24px;
+            padding-top: 8px;
+            animation: fadeInDown 0.6s ease-out;
         }
 
         .header h1 {
-            font-size: 34px;
+            font-size: 36px;
             font-weight: 700;
             color: var(--text-primary);
+            letter-spacing: -0.5px;
+            text-shadow: 0 2px 8px var(--shadow-light);
         }
 
         .search-box {
-            background: var(--bg-secondary);
-            border-radius: 12px;
-            padding: 16px 24px;
-            margin-bottom: 32px;
-            box-shadow: 0 2px 6px var(--shadow);
-            border: 1px solid var(--border-color);
+            background: var(--search-glass);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border-radius: 16px;
+            padding: 14px 20px;
+            margin-bottom: 28px;
+            box-shadow: 0 8px 32px var(--shadow-light);
+            border: 1px solid var(--glass-border);
+            animation: fadeInDown 0.6s ease-out 0.1s backwards;
         }
 
         .search-box input {
             width: 100%;
             border: none;
             outline: none;
-            font-size: 16px;
+            font-size: 17px;
             color: var(--text-primary);
             background: transparent;
+            font-weight: 400;
         }
 
         .search-box input::placeholder {
@@ -77,43 +98,53 @@
         }
 
         .accordion-container {
-            max-width: 414px;
+            max-width: 430px;
             margin: 0 auto;
+            animation: fadeIn 0.6s ease-out 0.2s backwards;
         }
 
         .accordion-item {
-            background: var(--bg-secondary);
-            border-radius: 12px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border-radius: 20px;
             margin-bottom: 16px;
-            box-shadow: 0 2px 6px var(--shadow);
-            border: 1px solid var(--border-color);
+            box-shadow: 0 8px 32px var(--shadow-light);
+            border: 1px solid var(--glass-border);
             overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .accordion-item:active {
+            transform: scale(0.98);
         }
 
         .accordion-header {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 16px 20px;
+            padding: 18px 24px;
             cursor: pointer;
             user-select: none;
-            transition: background-color 0.2s ease;
+            transition: all 0.3s ease;
         }
 
-        .accordion-header:hover {
-            background-color: var(--bg-primary);
+        .accordion-header:active {
+            opacity: 0.7;
         }
 
         .accordion-title {
-            font-size: 18px;
+            font-size: 19px;
             font-weight: 600;
             color: var(--text-primary);
+            letter-spacing: -0.3px;
         }
 
         .accordion-icon {
-            font-size: 14px;
+            font-size: 13px;
             color: var(--text-secondary);
-            transition: transform 0.3s ease;
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0.8;
         }
 
         .accordion-item.open .accordion-icon {
@@ -123,18 +154,18 @@
         .accordion-content {
             max-height: 0;
             overflow: hidden;
-            transition: max-height 0.3s ease;
+            transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .accordion-item.open .accordion-content {
-            max-height: 2000px;
+            max-height: 3000px;
         }
 
         .bookmarks-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 20px;
-            padding: 20px;
+            padding: 20px 20px 24px;
         }
 
         .bookmark-item {
@@ -143,49 +174,59 @@
             align-items: center;
             text-decoration: none;
             color: var(--text-primary);
-            transition: transform 0.2s ease;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .bookmark-item:active {
-            transform: scale(0.95);
+            transform: scale(0.92);
         }
 
         .bookmark-icon {
-            width: 60px;
-            height: 60px;
-            border-radius: 13px;
-            margin-bottom: 8px;
+            width: 64px;
+            height: 64px;
+            border-radius: 16px;
+            margin-bottom: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            background-color: var(--bg-primary);
-            border: 1px solid var(--border-color);
-            box-shadow: 0 1px 3px var(--shadow);
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 4px 16px var(--shadow-light);
             overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .bookmark-item:active .bookmark-icon {
+            box-shadow: 0 2px 8px var(--shadow-light);
         }
 
         .bookmark-icon img {
-            width: 32px;
-            height: 32px;
-            border-radius: 6px;
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            object-fit: contain;
         }
 
         .bookmark-icon.letter-icon {
-            font-size: 28px;
-            font-weight: 300;
+            font-size: 30px;
+            font-weight: 500;
             color: #ffffff;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
 
         .bookmark-title {
             font-size: 12px;
-            font-weight: 400;
+            font-weight: 500;
             text-align: center;
-            line-height: 1.2;
-            max-width: 80px;
+            line-height: 1.3;
+            max-width: 75px;
             overflow: hidden;
             display: -webkit-box;
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
+            color: var(--text-primary);
         }
 
         .loading {
@@ -193,6 +234,7 @@
             color: var(--text-secondary);
             font-size: 17px;
             padding: 60px 20px;
+            animation: pulse 2s ease-in-out infinite;
         }
 
         .no-results {
@@ -200,66 +242,117 @@
             color: var(--text-secondary);
             font-size: 16px;
             padding: 40px 20px;
-            background: var(--bg-secondary);
-            border-radius: 12px;
-            border: 1px solid var(--border-color);
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 20px;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 8px 32px var(--shadow-light);
         }
 
-        /* Icon renkleri */
-        .icon-blue { background: #007AFF; }
-        .icon-green { background: #34C759; }
-        .icon-orange { background: #FF9500; }
-        .icon-red { background: #FF3B30; }
-        .icon-purple { background: #AF52DE; }
-        .icon-teal { background: #5AC8FA; }
-        .icon-yellow { background: #FFCC00; }
-        .icon-gray { background: #8E8E93; }
-        .icon-indigo { background: #5856D6; }
-        .icon-pink { background: #FF2D92; }
+        /* Glassmorphism Icon Colors */
+        .icon-blue { background: linear-gradient(135deg, #007AFF 0%, #0051D5 100%); }
+        .icon-green { background: linear-gradient(135deg, #34C759 0%, #248A3D 100%); }
+        .icon-orange { background: linear-gradient(135deg, #FF9500 0%, #FF6B00 100%); }
+        .icon-red { background: linear-gradient(135deg, #FF3B30 0%, #D70015 100%); }
+        .icon-purple { background: linear-gradient(135deg, #AF52DE 0%, #8D28C9 100%); }
+        .icon-teal { background: linear-gradient(135deg, #5AC8FA 0%, #007AFF 100%); }
+        .icon-yellow { background: linear-gradient(135deg, #FFCC00 0%, #FF9500 100%); }
+        .icon-gray { background: linear-gradient(135deg, #8E8E93 0%, #636366 100%); }
+        .icon-indigo { background: linear-gradient(135deg, #5856D6 0%, #3634A3 100%); }
+        .icon-pink { background: linear-gradient(135deg, #FF2D92 0%, #D70074 100%); }
 
-        @media (max-width: 428px) {
-            .accordion-container {
-                max-width: 100%;
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
+        }
+
+        /* iPhone 14 Pro Max Optimizations */
+        @media (max-width: 430px) {
+            body {
+                padding: env(safe-area-inset-top, 16px) 14px env(safe-area-inset-bottom, 16px);
+            }
+
+            .bookmarks-grid {
+                gap: 18px;
+                padding: 18px 18px 22px;
+            }
+            
+            .bookmark-icon {
+                width: 62px;
+                height: 62px;
+            }
+        }
+
+        @media (max-width: 390px) {
+            .header h1 {
+                font-size: 32px;
             }
 
             .bookmarks-grid {
                 gap: 16px;
                 padding: 16px;
             }
-        }
-
-        @media (max-width: 375px) {
-            .bookmarks-grid {
-                gap: 12px;
-                padding: 12px;
-            }
             
             .bookmark-icon {
-                width: 55px;
-                height: 55px;
+                width: 58px;
+                height: 58px;
             }
-            
+
             .bookmark-icon img {
-                width: 28px;
-                height: 28px;
+                width: 32px;
+                height: 32px;
             }
-            
+
             .bookmark-icon.letter-icon {
-                font-size: 24px;
+                font-size: 26px;
             }
 
             .search-box {
-                padding: 12px 16px;
+                padding: 12px 18px;
                 margin-bottom: 24px;
             }
 
             .accordion-header {
-                padding: 12px 16px;
+                padding: 16px 20px;
             }
 
             .accordion-title {
-                font-size: 16px;
+                font-size: 18px;
             }
+        }
+
+        /* Performance Optimizations */
+        .bookmark-icon img {
+            will-change: auto;
+            transform: translateZ(0);
+        }
+
+        .accordion-item {
+            will-change: auto;
         }
     </style>
 </head>
@@ -269,7 +362,7 @@
     </div>
 
     <div class="search-box">
-        <input type="text" id="searchInput" placeholder="Favori ara..." onkeyup="searchBookmarks()">
+        <input type="text" id="searchInput" placeholder="Favori ara..." autocomplete="off" autocorrect="off" autocapitalize="off">
     </div>
 
     <div id="loading" class="loading">Favoriler yükleniyor...</div>
@@ -285,7 +378,8 @@
         // Cache yönetimi için sabitler
         const CACHE_KEY = 'bookmarksCache';
         const CACHE_TIMESTAMP_KEY = 'bookmarksCacheTimestamp';
-        const CACHE_DURATION = 24 * 60 * 60 * 1000; // 24 saat (milisaniye)
+        const ICON_CACHE_KEY = 'iconCache';
+        const CACHE_DURATION = 24 * 60 * 60 * 1000; // 24 saat
 
         // Cache işlevleri
         function isCacheValid() {
@@ -316,9 +410,35 @@
             }
         }
 
+        // Icon cache'i localStorage'a kaydet
+        function saveIconCache() {
+            try {
+                const cacheObj = Object.fromEntries(iconCache);
+                localStorage.setItem(ICON_CACHE_KEY, JSON.stringify(cacheObj));
+            } catch (error) {
+                console.error('Icon cache kaydedilemedi:', error);
+            }
+        }
+
+        // Icon cache'i localStorage'dan yükle
+        function loadIconCache() {
+            try {
+                const cached = localStorage.getItem(ICON_CACHE_KEY);
+                if (cached) {
+                    const cacheObj = JSON.parse(cached);
+                    Object.entries(cacheObj).forEach(([key, value]) => {
+                        iconCache.set(key, value);
+                    });
+                }
+            } catch (error) {
+                console.error('Icon cache yüklenemedi:', error);
+            }
+        }
+
         function clearCache() {
             localStorage.removeItem(CACHE_KEY);
             localStorage.removeItem(CACHE_TIMESTAMP_KEY);
+            localStorage.removeItem(ICON_CACHE_KEY);
         }
 
         // Accordion durumunu localStorage'da sakla
@@ -330,7 +450,6 @@
 
         function getAccordionState(categoryKey) {
             const accordionStates = JSON.parse(localStorage.getItem('accordionStates') || '{}');
-            // Varsayılan olarak açık (true)
             return accordionStates.hasOwnProperty(categoryKey) ? accordionStates[categoryKey] : true;
         }
 
@@ -364,6 +483,7 @@
                     const img = document.createElement('img');
                     img.src = cachedIcon.src;
                     img.alt = '';
+                    img.loading = 'lazy';
                     iconDiv.appendChild(img);
                 } else {
                     iconDiv.className += ` letter-icon ${cachedIcon.colorClass}`;
@@ -378,9 +498,11 @@
                 const img = document.createElement('img');
                 img.src = faviconUrl;
                 img.alt = '';
+                img.loading = 'lazy';
                 
                 img.onload = function() {
                     iconCache.set(cacheKey, { type: 'image', src: faviconUrl });
+                    saveIconCache();
                 };
                 
                 img.onerror = function() {
@@ -389,6 +511,7 @@
                     iconDiv.className = `bookmark-icon letter-icon ${letterIcon.colorClass}`;
                     iconDiv.textContent = letterIcon.letter;
                     iconCache.set(cacheKey, { type: 'letter', letter: letterIcon.letter, colorClass: letterIcon.colorClass });
+                    saveIconCache();
                 };
                 
                 iconDiv.appendChild(img);
@@ -397,6 +520,7 @@
                 iconDiv.className += ` letter-icon ${letterIcon.colorClass}`;
                 iconDiv.textContent = letterIcon.letter;
                 iconCache.set(cacheKey, { type: 'letter', letter: letterIcon.letter, colorClass: letterIcon.colorClass });
+                saveIconCache();
             }
             
             return iconDiv;
@@ -406,7 +530,6 @@
             const bookmarkLink = document.createElement('a');
             bookmarkLink.href = bookmark.url;
             bookmarkLink.className = 'bookmark-item';
-            // target="_blank" kaldırıldı, böylece bağlantılar aynı sekmede açılır
 
             const iconDiv = createBookmarkIcon(bookmark);
             
@@ -424,13 +547,11 @@
             const accordionItem = document.createElement('div');
             accordionItem.className = 'accordion-item';
             
-            // Kaydedilmiş durum kontrolü
             const isOpen = getAccordionState(categoryKey);
             if (isOpen) {
                 accordionItem.classList.add('open');
             }
 
-            // Header
             const header = document.createElement('div');
             header.className = 'accordion-header';
             header.onclick = () => toggleAccordion(accordionItem, categoryKey);
@@ -446,7 +567,6 @@
             header.appendChild(title);
             header.appendChild(icon);
 
-            // Content
             const content = document.createElement('div');
             content.className = 'accordion-content';
 
@@ -459,7 +579,6 @@
             });
 
             content.appendChild(grid);
-
             accordionItem.appendChild(header);
             accordionItem.appendChild(content);
 
@@ -468,10 +587,7 @@
 
         function toggleAccordion(accordionItem, categoryKey) {
             const isCurrentlyOpen = accordionItem.classList.contains('open');
-            
             accordionItem.classList.toggle('open');
-            
-            // Durumu kaydet
             saveAccordionState(categoryKey, !isCurrentlyOpen);
         }
 
@@ -481,8 +597,6 @@
 
             Object.keys(bookmarksData.bookmarks).forEach(categoryKey => {
                 const bookmarks = bookmarksData.bookmarks[categoryKey];
-                
-                // Boş kategorileri atla
                 if (bookmarks.length === 0) return;
                 
                 const categoryTitle = bookmarksData.categoryTitles?.[categoryKey] || categoryKey;
@@ -493,9 +607,8 @@
 
         function processBookmarksData(data) {
             bookmarksData = data;
-            
-            // Tüm kategorilerden favorileri topla (arama için)
             allBookmarks = [];
+            
             Object.keys(data.bookmarks).forEach(categoryKey => {
                 data.bookmarks[categoryKey].forEach(bookmark => {
                     bookmark.category = categoryKey;
@@ -511,17 +624,12 @@
 
         async function fetchFromDropbox() {
             try {
-                console.log('Dropbox\'tan veri çekiliyor...');
                 const response = await fetch(jsonUrl);
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
                 const data = await response.json();
-                
-                // Yeni veriyi cache'e kaydet
                 setCachedData(data);
-                console.log('Veri Dropbox\'tan çekildi ve cache\'e kaydedildi');
-                
                 return data;
             } catch (error) {
                 console.error('Dropbox\'tan veri çekilirken hata:', error);
@@ -530,28 +638,26 @@
         }
 
         async function loadBookmarks() {
+            // Icon cache'i yükle
+            loadIconCache();
+            
             try {
-                // Önce cache'i kontrol et
                 if (isCacheValid()) {
                     const cachedData = getCachedData();
                     if (cachedData) {
-                        console.log('Veriler cache\'ten yüklendi');
                         processBookmarksData(cachedData);
                         return;
                     }
                 }
 
-                // Cache geçersiz veya mevcut değil, Dropbox'tan çek
                 const data = await fetchFromDropbox();
                 processBookmarksData(data);
                 
             } catch (error) {
                 console.error('Favoriler yüklenirken hata:', error);
                 
-                // Hata durumunda eski cache'i kullanmayı dene
                 const cachedData = getCachedData();
                 if (cachedData) {
-                    console.log('Hata nedeniyle eski cache verisi kullanılıyor');
                     processBookmarksData(cachedData);
                 } else {
                     document.getElementById('loading').innerHTML = 'Favoriler yüklenirken hata oluştu. Lütfen sayfayı yenileyin.';
@@ -559,51 +665,56 @@
             }
         }
 
+        // Debounced search
+        let searchTimeout;
         function searchBookmarks() {
-            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-            const container = document.getElementById('accordionContainer');
-            
-            if (searchTerm === '') {
-                renderAccordions();
-                return;
-            }
-            
-            // Arama sonuçlarını filtrele
-            const filteredBookmarks = allBookmarks.filter(bookmark => 
-                bookmark.title.toLowerCase().includes(searchTerm) ||
-                bookmark.url.toLowerCase().includes(searchTerm)
-            );
-            
-            container.innerHTML = '';
-            
-            if (filteredBookmarks.length === 0) {
-                const noResults = document.createElement('div');
-                noResults.className = 'no-results';
-                noResults.textContent = 'Arama sonucu bulunamadı.';
-                container.appendChild(noResults);
-                return;
-            }
-            
-            // Sonuçları kategorilere göre grupla
-            const groupedResults = {};
-            filteredBookmarks.forEach(bookmark => {
-                const categoryKey = bookmark.category;
-                if (!groupedResults[categoryKey]) {
-                    groupedResults[categoryKey] = [];
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(() => {
+                const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+                const container = document.getElementById('accordionContainer');
+                
+                if (searchTerm === '') {
+                    renderAccordions();
+                    return;
                 }
-                groupedResults[categoryKey].push(bookmark);
-            });
-            
-            // Her kategori için accordion oluştur
-            Object.keys(groupedResults).forEach(categoryKey => {
-                const categoryTitle = bookmarksData.categoryTitles?.[categoryKey] || categoryKey;
-                const accordionItem = createAccordionItem(categoryKey, categoryTitle, groupedResults[categoryKey]);
-                accordionItem.classList.add('open'); // Arama sonuçlarında tüm kategoriler açık
-                container.appendChild(accordionItem);
-            });
+                
+                const filteredBookmarks = allBookmarks.filter(bookmark => 
+                    bookmark.title.toLowerCase().includes(searchTerm) ||
+                    bookmark.url.toLowerCase().includes(searchTerm)
+                );
+                
+                container.innerHTML = '';
+                
+                if (filteredBookmarks.length === 0) {
+                    const noResults = document.createElement('div');
+                    noResults.className = 'no-results';
+                    noResults.textContent = 'Arama sonucu bulunamadı.';
+                    container.appendChild(noResults);
+                    return;
+                }
+                
+                const groupedResults = {};
+                filteredBookmarks.forEach(bookmark => {
+                    const categoryKey = bookmark.category;
+                    if (!groupedResults[categoryKey]) {
+                        groupedResults[categoryKey] = [];
+                    }
+                    groupedResults[categoryKey].push(bookmark);
+                });
+                
+                Object.keys(groupedResults).forEach(categoryKey => {
+                    const categoryTitle = bookmarksData.categoryTitles?.[categoryKey] || categoryKey;
+                    const accordionItem = createAccordionItem(categoryKey, categoryTitle, groupedResults[categoryKey]);
+                    accordionItem.classList.add('open');
+                    container.appendChild(accordionItem);
+                });
+            }, 300);
         }
 
-        // Debug fonksiyonları (geliştirme için)
+        // Event listener
+        document.getElementById('searchInput').addEventListener('input', searchBookmarks);
+
+        // Debug fonksiyonları
         function forceRefresh() {
             clearCache();
             location.reload();
@@ -618,15 +729,13 @@
                 console.log('Son güncelleme:', cacheTime.toLocaleString('tr-TR'));
                 console.log('Sonraki güncelleme:', nextUpdate.toLocaleString('tr-TR'));
                 console.log('Cache geçerli mi:', isCacheValid());
+                console.log('Icon cache boyutu:', iconCache.size);
             } else {
                 console.log('Cache mevcut değil');
             }
         }
 
-        // Sayfa yüklendiğinde favorileri yükle
         window.addEventListener('load', loadBookmarks);
-
-        // Debug için global fonksiyonları ekle
         window.forceRefresh = forceRefresh;
         window.showCacheInfo = showCacheInfo;
     </script>
