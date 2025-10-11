@@ -25,8 +25,8 @@
             --shadow-light: rgba(31, 38, 135, 0.15);
             --shadow-medium: rgba(31, 38, 135, 0.25);
             --accent-color: #007AFF;
-            --accent-glow: rgba(0, 122, 255, 0.3);
             --search-glass: rgba(255, 255, 255, 0.4);
+            --icon-overlay: rgba(0, 0, 0, 0.08);
         }
 
         @media (prefers-color-scheme: dark) {
@@ -40,6 +40,7 @@
                 --shadow-light: rgba(0, 0, 0, 0.3);
                 --shadow-medium: rgba(0, 0, 0, 0.5);
                 --search-glass: rgba(26, 26, 46, 0.6);
+                --icon-overlay: rgba(255, 255, 255, 0.12);
             }
         }
 
@@ -145,6 +146,7 @@
             color: var(--text-secondary);
             transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             opacity: 0.8;
+            flex-shrink: 0;
         }
 
         .accordion-item.open .accordion-icon {
@@ -175,6 +177,7 @@
             text-decoration: none;
             color: var(--text-primary);
             transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            min-width: 0;
         }
 
         .bookmark-item:active {
@@ -193,13 +196,32 @@
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             border: 1px solid var(--glass-border);
-            box-shadow: 0 4px 16px var(--shadow-light);
+            box-shadow: 
+                0 4px 16px var(--shadow-light),
+                inset 0 1px 1px rgba(255, 255, 255, 0.2),
+                inset 0 -1px 1px var(--icon-overlay);
             overflow: hidden;
             transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .bookmark-icon::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0) 100%);
+            border-radius: 16px;
+            pointer-events: none;
         }
 
         .bookmark-item:active .bookmark-icon {
-            box-shadow: 0 2px 8px var(--shadow-light);
+            box-shadow: 
+                0 2px 8px var(--shadow-light),
+                inset 0 1px 1px rgba(255, 255, 255, 0.2),
+                inset 0 -1px 1px var(--icon-overlay);
         }
 
         .bookmark-icon img {
@@ -207,13 +229,16 @@
             height: 36px;
             border-radius: 8px;
             object-fit: contain;
+            z-index: 1;
+            filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.15));
         }
 
         .bookmark-icon.letter-icon {
             font-size: 30px;
             font-weight: 500;
             color: #ffffff;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+            z-index: 1;
         }
 
         .bookmark-title {
@@ -227,6 +252,7 @@
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
             color: var(--text-primary);
+            word-break: break-word;
         }
 
         .loading {
@@ -250,17 +276,77 @@
             box-shadow: 0 8px 32px var(--shadow-light);
         }
 
-        /* Glassmorphism Icon Colors */
-        .icon-blue { background: linear-gradient(135deg, #007AFF 0%, #0051D5 100%); }
-        .icon-green { background: linear-gradient(135deg, #34C759 0%, #248A3D 100%); }
-        .icon-orange { background: linear-gradient(135deg, #FF9500 0%, #FF6B00 100%); }
-        .icon-red { background: linear-gradient(135deg, #FF3B30 0%, #D70015 100%); }
-        .icon-purple { background: linear-gradient(135deg, #AF52DE 0%, #8D28C9 100%); }
-        .icon-teal { background: linear-gradient(135deg, #5AC8FA 0%, #007AFF 100%); }
-        .icon-yellow { background: linear-gradient(135deg, #FFCC00 0%, #FF9500 100%); }
-        .icon-gray { background: linear-gradient(135deg, #8E8E93 0%, #636366 100%); }
-        .icon-indigo { background: linear-gradient(135deg, #5856D6 0%, #3634A3 100%); }
-        .icon-pink { background: linear-gradient(135deg, #FF2D92 0%, #D70074 100%); }
+        /* Glassmorphism Icon Colors with Enhanced Lighting */
+        .icon-blue { 
+            background: linear-gradient(135deg, #007AFF 0%, #0051D5 100%);
+            box-shadow: 
+                0 4px 16px rgba(0, 122, 255, 0.3),
+                inset 0 1px 1px rgba(255, 255, 255, 0.2),
+                inset 0 -1px 1px rgba(0, 0, 0, 0.15);
+        }
+        .icon-green { 
+            background: linear-gradient(135deg, #34C759 0%, #248A3D 100%);
+            box-shadow: 
+                0 4px 16px rgba(52, 199, 89, 0.3),
+                inset 0 1px 1px rgba(255, 255, 255, 0.2),
+                inset 0 -1px 1px rgba(0, 0, 0, 0.15);
+        }
+        .icon-orange { 
+            background: linear-gradient(135deg, #FF9500 0%, #FF6B00 100%);
+            box-shadow: 
+                0 4px 16px rgba(255, 149, 0, 0.3),
+                inset 0 1px 1px rgba(255, 255, 255, 0.2),
+                inset 0 -1px 1px rgba(0, 0, 0, 0.15);
+        }
+        .icon-red { 
+            background: linear-gradient(135deg, #FF3B30 0%, #D70015 100%);
+            box-shadow: 
+                0 4px 16px rgba(255, 59, 48, 0.3),
+                inset 0 1px 1px rgba(255, 255, 255, 0.2),
+                inset 0 -1px 1px rgba(0, 0, 0, 0.15);
+        }
+        .icon-purple { 
+            background: linear-gradient(135deg, #AF52DE 0%, #8D28C9 100%);
+            box-shadow: 
+                0 4px 16px rgba(175, 82, 222, 0.3),
+                inset 0 1px 1px rgba(255, 255, 255, 0.2),
+                inset 0 -1px 1px rgba(0, 0, 0, 0.15);
+        }
+        .icon-teal { 
+            background: linear-gradient(135deg, #5AC8FA 0%, #007AFF 100%);
+            box-shadow: 
+                0 4px 16px rgba(90, 200, 250, 0.3),
+                inset 0 1px 1px rgba(255, 255, 255, 0.2),
+                inset 0 -1px 1px rgba(0, 0, 0, 0.15);
+        }
+        .icon-yellow { 
+            background: linear-gradient(135deg, #FFCC00 0%, #FF9500 100%);
+            box-shadow: 
+                0 4px 16px rgba(255, 204, 0, 0.3),
+                inset 0 1px 1px rgba(255, 255, 255, 0.2),
+                inset 0 -1px 1px rgba(0, 0, 0, 0.15);
+        }
+        .icon-gray { 
+            background: linear-gradient(135deg, #A2A2A7 0%, #636366 100%);
+            box-shadow: 
+                0 4px 16px rgba(142, 142, 147, 0.3),
+                inset 0 1px 1px rgba(255, 255, 255, 0.2),
+                inset 0 -1px 1px rgba(0, 0, 0, 0.15);
+        }
+        .icon-indigo { 
+            background: linear-gradient(135deg, #5856D6 0%, #3634A3 100%);
+            box-shadow: 
+                0 4px 16px rgba(88, 86, 214, 0.3),
+                inset 0 1px 1px rgba(255, 255, 255, 0.2),
+                inset 0 -1px 1px rgba(0, 0, 0, 0.15);
+        }
+        .icon-pink { 
+            background: linear-gradient(135deg, #FF2D92 0%, #D70074 100%);
+            box-shadow: 
+                0 4px 16px rgba(255, 45, 146, 0.3),
+                inset 0 1px 1px rgba(255, 255, 255, 0.2),
+                inset 0 -1px 1px rgba(0, 0, 0, 0.15);
+        }
 
         /* Animations */
         @keyframes fadeIn {
@@ -375,13 +461,11 @@
         const iconCache = new Map();
         const colorClasses = ['icon-blue', 'icon-green', 'icon-orange', 'icon-red', 'icon-purple', 'icon-teal', 'icon-yellow', 'icon-gray', 'icon-indigo', 'icon-pink'];
 
-        // Cache yönetimi için sabitler
         const CACHE_KEY = 'bookmarksCache';
         const CACHE_TIMESTAMP_KEY = 'bookmarksCacheTimestamp';
         const ICON_CACHE_KEY = 'iconCache';
-        const CACHE_DURATION = 24 * 60 * 60 * 1000; // 24 saat
+        const CACHE_DURATION = 24 * 60 * 60 * 1000;
 
-        // Cache işlevleri
         function isCacheValid() {
             const timestamp = localStorage.getItem(CACHE_TIMESTAMP_KEY);
             if (!timestamp) return false;
@@ -410,7 +494,6 @@
             }
         }
 
-        // Icon cache'i localStorage'a kaydet
         function saveIconCache() {
             try {
                 const cacheObj = Object.fromEntries(iconCache);
@@ -420,7 +503,6 @@
             }
         }
 
-        // Icon cache'i localStorage'dan yükle
         function loadIconCache() {
             try {
                 const cached = localStorage.getItem(ICON_CACHE_KEY);
@@ -441,7 +523,6 @@
             localStorage.removeItem(ICON_CACHE_KEY);
         }
 
-        // Accordion durumunu localStorage'da sakla
         function saveAccordionState(categoryKey, isOpen) {
             const accordionStates = JSON.parse(localStorage.getItem('accordionStates') || '{}');
             accordionStates[categoryKey] = isOpen;
@@ -638,7 +719,6 @@
         }
 
         async function loadBookmarks() {
-            // Icon cache'i yükle
             loadIconCache();
             
             try {
@@ -665,7 +745,6 @@
             }
         }
 
-        // Debounced search
         let searchTimeout;
         function searchBookmarks() {
             clearTimeout(searchTimeout);
@@ -711,10 +790,8 @@
             }, 300);
         }
 
-        // Event listener
         document.getElementById('searchInput').addEventListener('input', searchBookmarks);
 
-        // Debug fonksiyonları
         function forceRefresh() {
             clearCache();
             location.reload();
