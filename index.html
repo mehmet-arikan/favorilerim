@@ -676,8 +676,8 @@
 
     <script>
         // JSONBin Configuration
-        const JSONBIN_BIN_ID = '68ebe53a43b1c97be9645dd0'; // jsonbin.io'dan aldığınız bin ID
-        const JSONBIN_API_KEY = '$2a$10$MA6dBWMA/DYqBlGFhb/t6eKXlqc3RRY4fCIEcVO7LazxZukvE2mHq'; // jsonbin.io API anahtarı
+        const JSONBIN_BIN_ID = '68ebfdb7d0ea881f409f7782'; // jsonbin.io'dan aldığınız bin ID
+        const JSONBIN_API_KEY = '$2a$10$DklHSZjsbh9Lrpe7yDZFruzdhPe1YuD3uYl8Fr0f8FSlzBQzS0xgu'; // jsonbin.io API anahtarı
         const JSONBIN_API_URL = `https://api.jsonbin.io/v3/b/${JSONBIN_BIN_ID}`;
 
         let bookmarksData = null;
@@ -950,7 +950,8 @@
                 const response = await fetch(JSONBIN_API_URL, {
                     method: 'GET',
                     headers: {
-                        'X-Master-Key': JSONBIN_API_KEY
+                        'X-Master-Key': JSONBIN_API_KEY,
+                        'Content-Type': 'application/json'
                     }
                 });
 
