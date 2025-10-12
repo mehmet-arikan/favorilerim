@@ -58,7 +58,7 @@
         .header {
             display: flex;
             align-items: center;
-            justify-content: center;
+            justify-content: space-between;
             margin-bottom: 24px;
             padding-top: 8px;
             animation: fadeInDown 0.6s ease-out;
@@ -70,6 +70,34 @@
             color: var(--text-primary);
             letter-spacing: -0.5px;
             text-shadow: 0 2px 8px var(--shadow-light);
+        }
+
+        .header-buttons {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 4px 16px var(--shadow-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 20px;
+            color: var(--text-primary);
+        }
+
+        .btn-icon:active {
+            transform: scale(0.9);
+            opacity: 0.7;
         }
 
         .search-box {
@@ -178,10 +206,37 @@
             color: var(--text-primary);
             transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
             min-width: 0;
+            position: relative;
         }
 
         .bookmark-item:active {
             transform: scale(0.92);
+        }
+
+        .bookmark-item .delete-btn {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            width: 24px;
+            height: 24px;
+            background: #FF3B30;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            opacity: 0;
+            transform: scale(0.7);
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 8px rgba(255, 59, 48, 0.4);
+        }
+
+        .bookmark-item:hover .delete-btn,
+        body.edit-mode .bookmark-item .delete-btn {
+            opacity: 1;
+            transform: scale(1);
         }
 
         .bookmark-icon {
@@ -276,7 +331,134 @@
             box-shadow: 0 8px 32px var(--shadow-light);
         }
 
-        /* Glassmorphism Icon Colors with Enhanced Lighting */
+        /* Modal Styles */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            z-index: 1000;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+            align-items: flex-end;
+        }
+
+        .modal {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 28px 28px 0 0;
+            padding: 24px 20px;
+            width: 100%;
+            max-width: 100%;
+            box-shadow: 0 -8px 32px var(--shadow-light);
+            animation: slideUp 0.3s ease;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-header h2 {
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .modal-close {
+            font-size: 24px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            opacity: 0.6;
+            transition: opacity 0.2s;
+        }
+
+        .modal-close:active {
+            opacity: 1;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text-secondary);
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-primary);
+            font-size: 16px;
+            outline: none;
+            transition: all 0.2s;
+        }
+
+        .form-group input:focus {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: var(--accent-color);
+        }
+
+        .form-group input::placeholder {
+            color: var(--text-secondary);
+        }
+
+        .form-group select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-primary);
+            font-size: 16px;
+            outline: none;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 14px 20px;
+            background: linear-gradient(135deg, var(--accent-color) 0%, #0051D5 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 16px rgba(0, 122, 255, 0.3);
+        }
+
+        .btn-submit:active {
+            transform: scale(0.98);
+            opacity: 0.9;
+        }
+
+        .btn-submit:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        /* Icon Colors */
         .icon-blue { 
             background: linear-gradient(135deg, #007AFF 0%, #0051D5 100%);
             box-shadow: 
@@ -371,12 +553,20 @@
             }
         }
 
+        @keyframes slideUp {
+            from {
+                transform: translateY(100%);
+            }
+            to {
+                transform: translateY(0);
+            }
+        }
+
         @keyframes pulse {
             0%, 100% { opacity: 0.6; }
             50% { opacity: 1; }
         }
 
-        /* iPhone 14 Pro Max Optimizations */
         @media (max-width: 430px) {
             body {
                 padding: env(safe-area-inset-top, 16px) 14px env(safe-area-inset-bottom, 16px);
@@ -431,7 +621,6 @@
             }
         }
 
-        /* Performance Optimizations */
         .bookmark-icon img {
             will-change: auto;
             transform: translateZ(0);
@@ -445,6 +634,10 @@
 <body>
     <div class="header">
         <h1>⭐️ Favorilerim</h1>
+        <div class="header-buttons">
+            <button class="btn-icon" id="editBtn" title="Düzenle">✎</button>
+            <button class="btn-icon" id="addBtn" title="Ekle">+</button>
+        </div>
     </div>
 
     <div class="search-box">
@@ -454,8 +647,39 @@
     <div id="loading" class="loading">Favoriler yükleniyor...</div>
     <div id="accordionContainer" class="accordion-container" style="display: none;"></div>
 
+    <!-- Add/Edit Modal -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 id="modalTitle">Yeni Favori Ekle</h2>
+                <button class="modal-close" id="modalClose">✕</button>
+            </div>
+            <form id="bookmarkForm">
+                <div class="form-group">
+                    <label for="bookmarkTitle">Başlık</label>
+                    <input type="text" id="bookmarkTitle" placeholder="Örn: Google" required>
+                </div>
+                <div class="form-group">
+                    <label for="bookmarkUrl">URL</label>
+                    <input type="url" id="bookmarkUrl" placeholder="https://google.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="bookmarkCategory">Kategori</label>
+                    <select id="bookmarkCategory" required>
+                        <option value="">Kategori Seç</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn-submit">Ekle</button>
+            </form>
+        </div>
+    </div>
+
     <script>
-        const jsonUrl = 'https://dl.dropboxusercontent.com/scl/fi/qa04ssx9a3a0smmh8zq1l/favorilerim.json?rlkey=uplffb96u3bvwhk3jdesv98ma&st=22klqo6n&dl=0';
+        // JSONBin Configuration
+        const JSONBIN_BIN_ID = '68ebe53a43b1c97be9645dd0'; // jsonbin.io'dan aldığınız bin ID
+        const JSONBIN_API_KEY = '$2a$10$MA6dBWMA/DYqBlGFhb/t6eKXlqc3RRY4fCIEcVO7LazxZukvE2mHq'; // jsonbin.io API anahtarı
+        const JSONBIN_API_URL = `https://api.jsonbin.io/v3/b/${JSONBIN_BIN_ID}`;
+
         let bookmarksData = null;
         let allBookmarks = [];
         const iconCache = new Map();
@@ -466,6 +690,7 @@
         const ICON_CACHE_KEY = 'iconCache';
         const CACHE_DURATION = 24 * 60 * 60 * 1000;
 
+        // ==================== Cache Functions ====================
         function isCacheValid() {
             const timestamp = localStorage.getItem(CACHE_TIMESTAMP_KEY);
             if (!timestamp) return false;
@@ -523,6 +748,7 @@
             localStorage.removeItem(ICON_CACHE_KEY);
         }
 
+        // ==================== Accordion State ====================
         function saveAccordionState(categoryKey, isOpen) {
             const accordionStates = JSON.parse(localStorage.getItem('accordionStates') || '{}');
             accordionStates[categoryKey] = isOpen;
@@ -534,6 +760,7 @@
             return accordionStates.hasOwnProperty(categoryKey) ? accordionStates[categoryKey] : true;
         }
 
+        // ==================== Icon Management ====================
         function getFaviconUrl(bookmarkUrl) {
             try {
                 const url = new URL(bookmarkUrl);
@@ -607,7 +834,8 @@
             return iconDiv;
         }
 
-        function createBookmarkElement(bookmark) {
+        // ==================== DOM Creation ====================
+        function createBookmarkElement(bookmark, canDelete = false) {
             const bookmarkLink = document.createElement('a');
             bookmarkLink.href = bookmark.url;
             bookmarkLink.className = 'bookmark-item';
@@ -620,11 +848,22 @@
 
             bookmarkLink.appendChild(iconDiv);
             bookmarkLink.appendChild(titleDiv);
+
+            if (canDelete) {
+                const deleteBtn = document.createElement('div');
+                deleteBtn.className = 'delete-btn';
+                deleteBtn.textContent = '✕';
+                deleteBtn.onclick = (e) => {
+                    e.preventDefault();
+                    deleteBookmark(bookmark);
+                };
+                bookmarkLink.appendChild(deleteBtn);
+            }
             
             return bookmarkLink;
         }
 
-        function createAccordionItem(categoryKey, categoryTitle, bookmarks) {
+        function createAccordionItem(categoryKey, categoryTitle, bookmarks, canDelete = false) {
             const accordionItem = document.createElement('div');
             accordionItem.className = 'accordion-item';
             
@@ -655,7 +894,7 @@
             grid.className = 'bookmarks-grid';
 
             bookmarks.forEach(bookmark => {
-                const bookmarkElement = createBookmarkElement(bookmark);
+                const bookmarkElement = createBookmarkElement(bookmark, canDelete);
                 grid.appendChild(bookmarkElement);
             });
 
@@ -672,7 +911,7 @@
             saveAccordionState(categoryKey, !isCurrentlyOpen);
         }
 
-        function renderAccordions() {
+        function renderAccordions(canDelete = false) {
             const container = document.getElementById('accordionContainer');
             container.innerHTML = '';
 
@@ -681,11 +920,12 @@
                 if (bookmarks.length === 0) return;
                 
                 const categoryTitle = bookmarksData.categoryTitles?.[categoryKey] || categoryKey;
-                const accordionItem = createAccordionItem(categoryKey, categoryTitle, bookmarks);
+                const accordionItem = createAccordionItem(categoryKey, categoryTitle, bookmarks, canDelete);
                 container.appendChild(accordionItem);
             });
         }
 
+        // ==================== Data Processing ====================
         function processBookmarksData(data) {
             bookmarksData = data;
             allBookmarks = [];
@@ -698,22 +938,61 @@
             });
 
             renderAccordions();
+            updateCategorySelect();
             
             document.getElementById('loading').style.display = 'none';
             document.getElementById('accordionContainer').style.display = 'block';
         }
 
-        async function fetchFromDropbox() {
+        // ==================== JSONBin API ====================
+        async function fetchFromJsonBin() {
             try {
-                const response = await fetch(jsonUrl);
+                const response = await fetch(JSONBIN_API_URL, {
+                    method: 'GET',
+                    headers: {
+                        'X-Master-Key': JSONBIN_API_KEY
+                    }
+                });
+
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
+
                 const data = await response.json();
-                setCachedData(data);
-                return data;
+                const bookmarksData = data.record;
+                
+                setCachedData(bookmarksData);
+                console.log('Veriler JSONBin\'den çekildi ve cache\'e kaydedildi');
+                
+                return bookmarksData;
             } catch (error) {
-                console.error('Dropbox\'tan veri çekilirken hata:', error);
+                console.error('JSONBin\'den veri çekilirken hata:', error);
+                throw error;
+            }
+        }
+
+        async function updateToJsonBin(data) {
+            try {
+                const response = await fetch(JSONBIN_API_URL, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-Master-Key': JSONBIN_API_KEY
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const result = await response.json();
+                setCachedData(data);
+                console.log('Veriler JSONBin\'e kaydedildi');
+                
+                return result;
+            } catch (error) {
+                console.error('JSONBin\'e veri kaydedilirken hata:', error);
                 throw error;
             }
         }
@@ -722,22 +1001,27 @@
             loadIconCache();
             
             try {
+                // Cache kontrol
                 if (isCacheValid()) {
                     const cachedData = getCachedData();
                     if (cachedData) {
+                        console.log('Veriler cache\'ten yüklendi');
                         processBookmarksData(cachedData);
                         return;
                     }
                 }
 
-                const data = await fetchFromDropbox();
+                // Cache geçersiz, JSONBin'den çek
+                const data = await fetchFromJsonBin();
                 processBookmarksData(data);
                 
             } catch (error) {
                 console.error('Favoriler yüklenirken hata:', error);
                 
+                // Hata durumunda eski cache kullan
                 const cachedData = getCachedData();
                 if (cachedData) {
+                    console.log('Hata nedeniyle eski cache verisi kullanılıyor');
                     processBookmarksData(cachedData);
                 } else {
                     document.getElementById('loading').innerHTML = 'Favoriler yüklenirken hata oluştu. Lütfen sayfayı yenileyin.';
@@ -745,6 +1029,7 @@
             }
         }
 
+        // ==================== Search ====================
         let searchTimeout;
         function searchBookmarks() {
             clearTimeout(searchTimeout);
@@ -753,7 +1038,7 @@
                 const container = document.getElementById('accordionContainer');
                 
                 if (searchTerm === '') {
-                    renderAccordions();
+                    renderAccordions(document.body.classList.contains('edit-mode'));
                     return;
                 }
                 
@@ -783,7 +1068,7 @@
                 
                 Object.keys(groupedResults).forEach(categoryKey => {
                     const categoryTitle = bookmarksData.categoryTitles?.[categoryKey] || categoryKey;
-                    const accordionItem = createAccordionItem(categoryKey, categoryTitle, groupedResults[categoryKey]);
+                    const accordionItem = createAccordionItem(categoryKey, categoryTitle, groupedResults[categoryKey], document.body.classList.contains('edit-mode'));
                     accordionItem.classList.add('open');
                     container.appendChild(accordionItem);
                 });
@@ -792,29 +1077,116 @@
 
         document.getElementById('searchInput').addEventListener('input', searchBookmarks);
 
-        function forceRefresh() {
-            clearCache();
-            location.reload();
+        // ==================== Modal & Form ====================
+        const modal = document.getElementById('modalOverlay');
+        const modalClose = document.getElementById('modalClose');
+        const form = document.getElementById('bookmarkForm');
+        const addBtn = document.getElementById('addBtn');
+        const editBtn = document.getElementById('editBtn');
+
+        function openAddModal() {
+            document.getElementById('modalTitle').textContent = 'Yeni Favori Ekle';
+            document.getElementById('bookmarkForm').reset();
+            document.getElementById('bookmarkTitle').focus();
+            modal.classList.add('active');
         }
 
-        function showCacheInfo() {
-            const timestamp = localStorage.getItem(CACHE_TIMESTAMP_KEY);
-            if (timestamp) {
-                const cacheTime = new Date(parseInt(timestamp));
-                const nextUpdate = new Date(parseInt(timestamp) + CACHE_DURATION);
-                console.log('Cache bilgisi:');
-                console.log('Son güncelleme:', cacheTime.toLocaleString('tr-TR'));
-                console.log('Sonraki güncelleme:', nextUpdate.toLocaleString('tr-TR'));
-                console.log('Cache geçerli mi:', isCacheValid());
-                console.log('Icon cache boyutu:', iconCache.size);
-            } else {
-                console.log('Cache mevcut değil');
+        function closeModal() {
+            modal.classList.remove('active');
+        }
+
+        function updateCategorySelect() {
+            const select = document.getElementById('bookmarkCategory');
+            const currentValue = select.value;
+            const options = select.querySelectorAll('option:not(:first-child)');
+            options.forEach(opt => opt.remove());
+
+            Object.keys(bookmarksData.categoryTitles || {}).forEach(key => {
+                const option = document.createElement('option');
+                option.value = key;
+                option.textContent = bookmarksData.categoryTitles[key];
+                select.appendChild(option);
+            });
+
+            if (currentValue) select.value = currentValue;
+        }
+
+        function toggleEditMode() {
+            document.body.classList.toggle('edit-mode');
+            const isEditMode = document.body.classList.contains('edit-mode');
+            editBtn.style.background = isEditMode ? 'linear-gradient(135deg, #FF3B30 0%, #D70015 100%)' : '';
+            renderAccordions(isEditMode);
+        }
+
+        async function deleteBookmark(bookmark) {
+            if (!confirm(`"${bookmark.title}" silinsin mi?`)) return;
+
+            const categoryKey = bookmark.category;
+            const category = bookmarksData.bookmarks[categoryKey];
+            const index = category.findIndex(b => b.url === bookmark.url);
+
+            if (index > -1) {
+                category.splice(index, 1);
+                await updateToJsonBin(bookmarksData);
+                processBookmarksData(bookmarksData);
             }
         }
 
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const title = document.getElementById('bookmarkTitle').value.trim();
+            const url = document.getElementById('bookmarkUrl').value.trim();
+            const category = document.getElementById('bookmarkCategory').value;
+
+            if (!title || !url || !category) {
+                alert('Lütfen tüm alanları doldurun');
+                return;
+            }
+
+            // URL validation
+            try {
+                new URL(url);
+            } catch {
+                alert('Geçerli bir URL girin');
+                return;
+            }
+
+            // Bookmark ekle
+            const newBookmark = { title, url };
+            
+            if (!bookmarksData.bookmarks[category]) {
+                bookmarksData.bookmarks[category] = [];
+            }
+
+            bookmarksData.bookmarks[category].push(newBookmark);
+
+            // JSONBin'e kaydet (POST request)
+            document.querySelector('.btn-submit').disabled = true;
+            document.querySelector('.btn-submit').textContent = 'Kaydediliyor...';
+
+            try {
+                await updateToJsonBin(bookmarksData);
+                processBookmarksData(bookmarksData);
+                closeModal();
+                alert('Favori başarıyla eklendi!');
+            } catch (error) {
+                alert('Favori eklenirken hata oluştu');
+            } finally {
+                document.querySelector('.btn-submit').disabled = false;
+                document.querySelector('.btn-submit').textContent = 'Ekle';
+            }
+        });
+
+        addBtn.addEventListener('click', openAddModal);
+        editBtn.addEventListener('click', toggleEditMode);
+        modalClose.addEventListener('click', closeModal);
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) closeModal();
+        });
+
+        // ==================== Init ====================
         window.addEventListener('load', loadBookmarks);
-        window.forceRefresh = forceRefresh;
-        window.showCacheInfo = showCacheInfo;
     </script>
 </body>
 </html>
